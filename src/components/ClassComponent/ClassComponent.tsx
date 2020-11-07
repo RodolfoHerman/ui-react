@@ -6,7 +6,25 @@ class ClassComponent extends React.Component<{ name: string}> {
         name: 'State name'
     }
 
+    constructor(props: any) {
+
+        super(props);
+        console.log('Passou no contructor');
+    }
+
+    componentDidMount() {
+
+        console.log('Passou no did mount');
+    }
+
+    componentDidUpdate() {
+
+        console.log('Passou no did update');
+    }
+
     render() {
+
+        console.log('Passou no render');
 
         // Recuperando informações do estado do componente baseado em classe
         // return <div>
