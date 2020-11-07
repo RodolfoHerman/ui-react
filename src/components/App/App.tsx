@@ -10,7 +10,7 @@ class App extends Component {
             <div className="App">
                 <div className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
-                    <TestComponent />
+                    <TestComponent name="Props name" />
                     <ClassComponent name="Porps name" />
                 </div>
                 <p className="App-intro">
