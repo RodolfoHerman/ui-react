@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Button from '../Button';
+import Button from '../../shared/Button';
+import Container from '../../shared/Container';
 import Header from '../Header';
 import './App.css';
 
@@ -18,7 +19,7 @@ class App extends Component {
             <div className="App">
                 <Header title="AlgaStock" />
 
-                <div className="Container">
+                <Container>
                     <Button 
                         content="Click me" 
                         onClick={ () => window.alert('Click') }
@@ -26,7 +27,7 @@ class App extends Component {
                     >
                         Alert
                     </Button>
-                </div>
+                </Container>
             </div>
         );
     }
