@@ -1,64 +1,33 @@
 import React from 'react';
+import organizeData from '../../utils/organizeDatasForTable';
 import './Table.scss';
-import PRODUCTS from './Table.mockdata'
 
-declare interface TableHeader {
+export interface TableHeader {
     key: string,
     value: string,
     right?: boolean
 }
 
-type IndexedHeaders = {
-    [key: string]: TableHeader
+declare interface TableProps {
+    headers: Array<TableHeader>;
+    data: Array<any>;
+    
+    enableActions?: boolean;
+
+    onDelete?: (item: any) => void;
+    onDetail?: (item: any) => void;
+    onEdit?: (item: any) => void;
 }
 
-type OrganizedData = {
-    [key: string]: any
-}
+const Table: React.FC<TableProps> = (props) => {
 
-const headers: Array<TableHeader> = [
-    { key: 'name', value: 'Product' },
-    { key: 'price', value: 'Price', right: true },
-    { key:'actions', value: 'Actions' },
-    { key: 'stock', value: 'Available Stock', right: true },
-];
-
-function organizeData(data: Array<any>, headers: Array<TableHeader>): [OrganizedData, IndexedHeaders] {
-
-    const indexedHeaders: IndexedHeaders = {};
-
-    headers.forEach(header => {
-
-        indexedHeaders[header.key] = {
-            ...header
-        }
-    });
-
-    const headerKeysInOrder = Object.keys(indexedHeaders);
-
-    const organizedData = data.map(item => {
-
-        const organizedItem: OrganizedData = {};
-
-        headerKeysInOrder.forEach(key => organizedItem[key] = item[key]);
-
-        organizedItem.$original = item;
-
-        return organizedItem;
-    });
-
-    return [organizedData, indexedHeaders];
-}
-
-const Table: React.FC = () => {
-
-    const [organizedData, indexedHeaders] = organizeData(PRODUCTS, headers);
+    const [organizedData, indexedHeaders] = organizeData(props.data, props.headers);
 
     return <table className="AppTable">
         <thead>
             <tr>
                 {
-                    headers.map(header => 
+                    props.headers.map(header => 
                         <th 
                             className={ header.right ? 'right' : '' } 
                             key={ header.key }
@@ -71,7 +40,7 @@ const Table: React.FC = () => {
         </thead>
         <tbody>
             {
-                organizedData.map((row: OrganizedData, i: number) => {
+                organizedData.map((row: any, i: number) => {
                     return <tr key={`tr_${i}`}>
                         {
                             Object
