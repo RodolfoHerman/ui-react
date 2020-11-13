@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Container from '../../shared/Container';
 import Table, { TableHeader } from '../../shared/Tabela';
-import PRODUCTS from '../../shared/Tabela/Table.mockdata';
+import PRODUCTS, { Product } from '../../shared/Tabela/Table.mockdata';
 import Header from '../Header';
 import ProductForm, { ProductCreator } from '../Product/ProductForm';
 import './App.css';
@@ -27,6 +27,15 @@ function App() {
         ]);
     }
 
+    const handleProductUpdate = (newProduct: Product) => {
+        setProducts(
+            products.map(product => product.id === newProduct.id 
+                ? newProduct
+                : product
+            )
+        );
+    }
+
     return (
         <div className="App">
             <Header title="AlgaStock" />
@@ -36,7 +45,9 @@ function App() {
                     data={ products }
                 />
                 <ProductForm 
+                    form={ products[0] }
                     onSubmit={ handleProductSubmit }
+                    onUpdate={ handleProductUpdate }
                 />
             </Container>
         </div>

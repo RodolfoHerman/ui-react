@@ -25,7 +25,7 @@ const PRODUCTS: Array<Product> = [
         stock: 65
     },
     {
-        id: 1,
+        id: 4,
         name: 'Detergent',
         price: 1.00,
         stock: 10
