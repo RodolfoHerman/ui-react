@@ -54,7 +54,7 @@ const Table: React.FC<TableProps> = (props) => {
                                     property !== '$original'
                                         ? <td
                                             className={ indexedHeaders[property].right ? 'right' : '' }
-                                            key={ row.$original.id + i }
+                                            key={ row.$original._id + i }
                                         >
                                             { row[property] }
                                         </td>
@@ -69,7 +69,7 @@ const Table: React.FC<TableProps> = (props) => {
                                             <Button 
                                                 // Para não executar o método em tempo de renderização 
                                                 // encapsulamos ele dentro de uma arraow function
-                                                onClick={() => props.onEdit && props.onEdit(row)}
+                                                onClick={() => props.onEdit && props.onEdit(row.$original)}
                                             >
                                                 Edit
                                             </Button>
@@ -77,7 +77,7 @@ const Table: React.FC<TableProps> = (props) => {
                                     {
                                         props.onDetail &&
                                             <Button 
-                                                onClick={() => props.onDetail && props.onDetail(row)}
+                                                onClick={() => props.onDetail && props.onDetail(row.$original)}
                                             >
                                                 Detail
                                             </Button>
@@ -85,7 +85,7 @@ const Table: React.FC<TableProps> = (props) => {
                                     {
                                         props.onDelete &&
                                             <Button 
-                                                onClick={() => props.onDelete && props.onDelete(row)}
+                                                onClick={() => props.onDelete && props.onDelete(row.$original)}
                                             >
                                                 Delete
                                             </Button>

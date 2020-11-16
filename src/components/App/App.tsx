@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import { createSingleProduct, deleteSingleProduct, getAllProducts, updateSingleProduct } from '../../services/Product.service';
 import Container from '../../shared/Container';
 import Table, { TableHeader } from '../../shared/Tabela';
 import PRODUCTS, { Product } from '../../shared/Tabela/Table.mockdata';
@@ -16,28 +17,48 @@ const headers: Array<TableHeader> = [
 
 function App() {
 
-    const [products, setProducts] = useState(PRODUCTS);
-    const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(PRODUCTS[0]);
+    const [products, setProducts] = useState<Array<Product>>([]);
+    const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined);
 
-    const handleProductSubmit = (product: ProductCreator) => {
-        setProducts([
-            ...products,
-            {
-                id: (products.length + 1),
-                ...product
-            }
-        ]);
+    async function fetchData() {
+        const _products = await getAllProducts();
+        setProducts(_products);
     }
 
-    const handleProductUpdate = (newProduct: Product) => {
-        setProducts(
-            products.map(product => product.id === newProduct.id 
-                ? newProduct
-                : product
-            )
-        );
+    useEffect(() => {
 
-        setUpdatingProduct(undefined);
+        fetchData();
+    // Array vazio para executar apenas uma vez (quando componente é criado)
+    // não realizando nenhum bind de variáveis
+    }, []);
+
+    const handleProductSubmit = async (product: ProductCreator) => {
+        try {
+            await createSingleProduct(product);
+            fetchData();
+        } catch (error) {
+            Swal.fire(
+                'Oopes!',
+                error.message,
+                'error'
+            );
+        }
+    }
+
+    const handleProductUpdate = async (newProduct: Product) => {
+        try {
+            await updateSingleProduct(newProduct);
+            // Após realização do updateSingleProduct o fluxo segue normal.
+            // Isso ocorre devido o 'await'
+            setUpdatingProduct(undefined);
+            fetchData();
+        } catch (error) {
+            Swal.fire(
+                'Oopes!',
+                error.message,
+                'error'
+            );
+        }
     }
 
     const handleProductEdit = (product: Product) => {
@@ -52,12 +73,25 @@ function App() {
         )
     }
 
-    const deleteProduct = (id: number) => {
-        setProducts(products.filter(product => product.id !== id));
+    const deleteProduct = async (id: string) => {
+        try {
+            await deleteSingleProduct(id);
+            Swal.fire('Uhuul', 'Product successfuly deleted', 'success');
 
-        updatingProduct 
-            && updatingProduct.id === id 
-            && setUpdatingProduct(undefined);
+            // Limpar formulário
+            updatingProduct 
+                && updatingProduct._id === id 
+                && setUpdatingProduct(undefined);
+
+            fetchData();
+
+        } catch (error) {
+            Swal.fire(
+                'Oopes!',
+                error.message,
+                'error'
+            );
+        }
     }
 
     const handleProductDelete = (product: Product) => {
@@ -73,13 +107,7 @@ function App() {
 
             if (!!result.isConfirmed) {
                
-                deleteProduct(product.id);
-
-                Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-                )
+                deleteProduct(product._id);
             }
         })
     }
