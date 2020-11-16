@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { createSingleProduct, deleteSingleProduct, getAllProducts, updateSingleProduct } from '../../services/Product.service';
 import Container from '../../shared/Container';
 import Table, { TableHeader } from '../../shared/Tabela';
-import PRODUCTS, { Product } from '../../shared/Tabela/Table.mockdata';
+import { Product } from '../../shared/Tabela/Table.mockdata';
 import Header from '../Header';
 import ProductForm, { ProductCreator } from '../Product/ProductForm';
 import './App.css';
