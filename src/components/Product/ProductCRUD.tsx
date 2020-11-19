@@ -8,7 +8,8 @@ import {
 import Table, { TableHeader } from '../../shared/Tabela';
 import { Product } from '../../shared/Tabela/Table.mockdata';
 import ProductForm, { ProductCreator } from './ProductForm';
-import { connect } from 'react-redux'; 
+import { connect, useDispatch } from 'react-redux'; 
+import { insertNewProduct } from '../../redux/Product/Product.action';
 
 const headers: Array<TableHeader> = [
     { key: 'id', value: '#' },
@@ -22,6 +23,8 @@ declare interface ProductCRUDProps {
 }
 
 const ProductCRUD: React.FC<ProductCRUDProps> = (props) => {
+
+    const dispatch = useDispatch();
 
     // const [products, setProducts] = useState<Array<Product>>([]);
     const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined);
@@ -40,7 +43,8 @@ const ProductCRUD: React.FC<ProductCRUDProps> = (props) => {
 
     const handleProductSubmit = async (product: ProductCreator) => {
         try {
-            await createSingleProduct(product);
+            // await createSingleProduct(product);
+            dispatch(insertNewProduct(product));
             fetchData();
         } catch (error) {
             Swal.fire(

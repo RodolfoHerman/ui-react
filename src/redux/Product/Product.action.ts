@@ -1,14 +1,9 @@
-import { Product } from "../../shared/Tabela/Table.mockdata";
+import { ProductCreator } from "../../components/Product/ProductForm";
 import { Action } from "./Product.reducer";
 
-export const insertNewProduct = (): Action<Product> => {
+export const insertNewProduct = (product: ProductCreator): Action<ProductCreator> => {
     return {
         type: 'INSERT_NEW_PRODUCT',
-        payload: {
-            _id: '123156fsdfs',
-            name: 'Cookie',
-            price: 0.35,
-            stock: 700
-        }
+        payload: product
     }
 }
