@@ -1,12 +1,11 @@
-import PRODUCTS, { Product } from "../../shared/Tabela/Table.mockdata"
+import { Action } from "../"
+import { Product } from "../../shared/Tabela/Table.mockdata"
 
-export interface Action<T = any> {
-    type: string;
-    payload?: T;
-}
-
-export default function(state = PRODUCTS, action: Action): Array<Product> {
+export default function(state = [], action: Action): Array<Product> {
     switch(action.type) {
+        case 'FETCH_PRODUCTS':
+            return [...action.payload]
+
         case 'INSERT_NEW_PRODUCT':
             return [...state, {
                 ...action.payload,

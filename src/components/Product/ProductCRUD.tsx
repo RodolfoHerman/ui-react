@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { 
-    createSingleProduct,
     deleteSingleProduct,
     updateSingleProduct
 } from '../../services/Product.service';
@@ -9,7 +8,7 @@ import Table, { TableHeader } from '../../shared/Tabela';
 import { Product } from '../../shared/Tabela/Table.mockdata';
 import ProductForm, { ProductCreator } from './ProductForm';
 import { connect, useDispatch } from 'react-redux'; 
-import { insertNewProduct } from '../../redux/Product/Product.action';
+import { getProducts, insertNewProduct } from '../../redux/Product/Product.action';
 
 const headers: Array<TableHeader> = [
     { key: 'id', value: '#' },
@@ -30,8 +29,12 @@ const ProductCRUD: React.FC<ProductCRUDProps> = (props) => {
     const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined);
 
     async function fetchData() {
-        // const _products = await getAllProducts();
-        // setProducts(_products);
+        
+        try {
+            await dispatch(getProducts());
+        } catch(err) {
+            Swal.fire('Oops!', err.message, 'error');
+        }
     }
 
     useEffect(() => {
