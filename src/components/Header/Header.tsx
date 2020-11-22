@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = (props) => {
 
     return <header className="AppHeader">
         <h1>{ props.title }</h1>
-        <span>{ props.firstProduct && props.firstProduct.name }</span>
+        <span>{ props.firstProduct?.name }</span>
     </header>
 }
 
