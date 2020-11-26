@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import ProductCRUD from '../components/Product/ProductCRUD';
 import Container from '../shared/Container';
 
-const HomeView = () => {
+const ProductsView = () => {
 
     return <>
     <Header title="AlgaStock" />
@@ -13,4 +13,4 @@ const HomeView = () => {
     </>
 }
 
-export default HomeView;
+export default ProductsView;

@@ -8,7 +8,7 @@ type OrganizedItem = {
     [key: string]: any
 }
 
-export default function organizeData(data: Array<any>, headers: Array<TableHeader>): [OrganizedItem, IndexedHeaders] {
+export default function organizeData(data: Array<any>, headers: Array<TableHeader>): [Array<OrganizedItem>, IndexedHeaders] {
 
     const indexedHeaders: IndexedHeaders = {};
 
@@ -21,7 +21,7 @@ export default function organizeData(data: Array<any>, headers: Array<TableHeade
 
     const headerKeysInOrder = Object.keys(indexedHeaders);
 
-    const organizedData: OrganizedItem = data.map(item => {
+    const organizedData: Array<OrganizedItem> = data.map(item => {
 
         const organizedItem: OrganizedItem = {};
 
