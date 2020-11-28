@@ -122,7 +122,10 @@ const Table: React.FC<TableProps> = (props) => {
                         return <NavLink
                             key={index}
                             activeClassName="selected"
-                            to={`/products?page=${index + 1}`}
+                            to={{
+                                pathname: location.pathname,
+                                search: `?page=${index + 1}`
+                            }}
                             isActive={ () => page === index + 1}
                         >
                             { index + 1 }
