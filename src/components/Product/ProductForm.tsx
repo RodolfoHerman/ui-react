@@ -126,7 +126,7 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
 }
 
 // Os perfis de admin e customer podem visualizar o formulário de produtos
-export default withPermission(['admin', 'customer'])(ProductForm);
+export default ProductForm
 
 // Somente o perfil de customer pode visualizar o formulário de produtos
 // export default withPermission(['customer'])(ProductForm);

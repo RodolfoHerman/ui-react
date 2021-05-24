@@ -5,8 +5,9 @@ import { Product } from '../../shared/Tabela/Table.mockdata';
 import ProductForm, { ProductCreator } from './ProductForm';
 import { connect, useDispatch } from 'react-redux'; 
 import * as ProductsAction from '../../redux/Product/Product.action';
-import { RootState, ThunkDispatch } from '../../redux';
+import { Action, RootState, ThunkDispatch } from '../../redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 const headers: Array<TableHeader> = [
     { key: 'id', value: '#' },
@@ -22,6 +23,8 @@ declare interface ProductCRUDProps {
 const ProductCRUD: React.FC<ProductCRUDProps> = (props) => {
 
     const dispatch: ThunkDispatch = useDispatch();
+    // const dispatchNop: Dispatch<Action<Product>> = useDispatch();
+
     // Hook useParams() é um objeto com todos os parâmetros da url
     const params = useParams<{id?: string}>();
     // Hook useHistory() é um objeto com a história de navegação dentro da aplicação
@@ -54,9 +57,14 @@ const ProductCRUD: React.FC<ProductCRUDProps> = (props) => {
     }
 
     const handleProductSubmit = async (product: ProductCreator) => {
-        dispatch(ProductsAction.insertNewProduct(product))
-            .catch(showErrorAlert);
-        
+        // dispatch(ProductsAction.insertNewProduct(product))
+        //     .catch(showErrorAlert);
+        // dispatchNop(ProductsAction.insertProduct(product))
+        console.log("ANTES")
+        await dispatch(ProductsAction.insertProduct(product))
+            .then(() => console.log("DEPOIS DENTRO"))
+            .catch(error => console.log(error))
+        console.log("DEPOIS")
     }
 
     const handleProductUpdate = async (newProduct: Product) => {
